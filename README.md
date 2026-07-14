@@ -81,7 +81,7 @@ The system follows a strict bottom-up hierarchical integration strategy, managin
 To validate the timing, delay, and functional correctness of the integrated array, full transient simulations were executed. 
 
 * **System Transient Response:**
-    ![Transient Response](assets/22_system_transient_response.png)
+    ![Transient Response](assets/22_system_transient_response_.png)
     > *Figure: Transient simulation verifying wordline assertion, bitline discharging, data latching, and sense-amp triggering over time. Validates successful state changes without read-disturb failures.*
 
 ---
@@ -105,7 +105,7 @@ Passed all base geometry, spacing, width, and localized density rules.
 
 ### Layout vs. Schematic (LVS)
 Achieved a 100% clean topological match between the schematic netlist and the extracted layout netlist using **Cadence PVS**.
-![Status](assets/14_lvs_run_status.png) | ![Summary](assets/15_lvs_match_summary.png)
+![Status](assets/14_lvs_run_status_.png) | ![Summary](assets/15_lvs_match_summary.png)
 
 ### Parasitic Extraction (PEX)
 To prepare the design for highly accurate post-layout simulations, lumped RC parasitic networks were extracted from the physical layout geometries using **Quantus QRC**.
