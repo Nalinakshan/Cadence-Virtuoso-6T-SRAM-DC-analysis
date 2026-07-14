@@ -122,10 +122,3 @@ To prepare the design for highly accurate post-layout simulations, lumped RC par
 * **Physical Verification:** Cadence Physical Verification System (PVS)
 * **Parasitic Extraction:** Cadence Quantus QRC
 
----
-
-## 🚀 How to Use This Repository
-1. Clone the repository to your local machine: `git clone https://github.com/Nalinakshan/Cadence-Virtuoso-6T-SRAM-DC-analysis.git`
-2. Define the library path in your `cds.lib` file within your Cadence working directory.
-3. Launch Virtuoso and attach the library to your designated 45nm standard technology file.
-4. Open the `sram_system_tb` schematic in ADE L to load the saved state and execute the transient/DC simulations.
