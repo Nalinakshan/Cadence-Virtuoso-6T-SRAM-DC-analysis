@@ -40,14 +40,14 @@ The fundamental building block is the 6T SRAM cell. Sizing is hyper-critical in 
 * **Cell Ratio (CR):** `(W/L)_driver / (W/L)_access` — Optimized for Read Stability.
 * **Pull-Up Ratio (PR):** `(W/L)_load / (W/L)_access` — Optimized for Write Margin.
 
-* **Core 6T SRAM Schematic:** ![Schematic](assets/04_core_6t_sram_schematic.png) 
+* **Core 6T SRAM Schematic:** ![Schematic](assets/04_core_6t_sram_schematic_.png) 
 * **Symbol:** ![Symbol](assets/08_sram_6t_symbol.png)
 
 ### DC Stability Analysis & VTC
 To extract the Static Noise Margin (SNM), a DC sweep was performed on the internal storage nodes to generate the Butterfly Curves (Voltage Transfer Characteristics).
 
-* **DC Testbench Schematic:** ![Testbench](Schematic.png)
-* **ADE L Simulation Setup:** ![ADE Setup](ADE%20L%20setup.png)
+* **DC Testbench Schematic:** ![Testbench](Schematic_.png)
+* **ADE L Simulation Setup:** ![ADE Setup](ADE%20L%20setup_.png)
 * **Voltage Transfer Characteristics (VTC):** ![VTC Graph](Output%20Graph.png)
 
 ---
@@ -57,11 +57,11 @@ To extract the Static Noise Margin (SNM), a DC sweep was performed on the intern
 To facilitate high-speed, reliable Read/Write operations, custom transistor-level peripheral circuits were developed:
 
 * **Sense Amplifier:** A high-gain differential amplifier that detects minute voltage differentials on the bitlines during a Read cycle.
-    * ![Schematic](assets/01_sense_amp_schematic.png) | ![Symbol](assets/11_sense_amp_symbol.png)
+    * ![Schematic](assets/01_sense_amp_schematic_.png) | ![Symbol](assets/11_sense_amp_symbol.png)
 * **Precharge Circuit:** Responsible for equalizing both BL and BLB to VDD prior to any memory access.
-    * ![Schematic](assets/02_precharge_schematic.png) | ![Symbol](assets/10_precharge_symbol.png)
+    * ![Schematic](assets/02_precharge_schematic_.png) | ![Symbol](assets/10_precharge_symbol.png)
 * **Row Decoder Slice:** Translates the incoming memory address to activate the precise Wordline (WL).
-    * ![Schematic](assets/03_decoder_slice_schematic.png) | ![Symbol](assets/09_decoder_slice_symbol.png)
+    * ![Schematic](assets/03_decoder_slice_schematic_.png) | ![Symbol](assets/09_decoder_slice_symbol.png)
 
 ---
 
@@ -69,7 +69,7 @@ To facilitate high-speed, reliable Read/Write operations, custom transistor-leve
 
 The system follows a strict bottom-up hierarchical integration strategy, managing complexity by cascading validated sub-blocks.
 
-* **8-Bit Word/Column:** * ![Schematic](assets/05_sram_8bit_column_schematic.png) | ![Symbol](assets/12_sram_8bit_column_symbol.png)
+* **8-Bit Word/Column:** ![Schematic](assets/05_sram_8bit_column_schematic.png) | ![Symbol](assets/12_sram_8bit_column_symbol.png)
 * **8x8 Array Top Level:** The complete 64-bit integrated memory block.
     * ![Schematic](assets/06_sram_8x8_array_schematic.png) | ![Symbol](assets/13_sram_8x8_array_symbol.png)
 * **System Testbench:** ![Schematic](assets/07_sram_system_testbench.png)
@@ -122,3 +122,10 @@ To prepare the design for highly accurate post-layout simulations, lumped RC par
 * **Physical Verification:** Cadence Physical Verification System (PVS)
 * **Parasitic Extraction:** Cadence Quantus QRC
 
+---
+
+## 🚀 How to Use This Repository
+1. Clone the repository to your local machine: `git clone https://github.com/Nalinakshan/Cadence-Virtuoso-6T-SRAM-DC-analysis.git`
+2. Define the library path in your `cds.lib` file within your Cadence working directory.
+3. Launch Virtuoso and attach the library to your designated 45nm standard technology file.
+4. Open the `sram_system_tb` schematic in ADE L to load the saved state and execute the transient/DC simulations.
