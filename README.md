@@ -1,60 +1,47 @@
-# 🚀 6T SRAM Cell: DC Analysis & Characterization
+# Cadence Virtuoso 6T SRAM Design and Verification
 
-This repository contains the design, simulation, and DC stability characterization of a standard **6-Transistor (6T) SRAM cell** implemented using Cadence Virtuoso. The project focuses on mapping out the cell's Voltage Transfer Characteristics (VTC) to evaluate static stability.
+This repository contains the complete custom IC design flow for a 6-Transistor (6T) SRAM architecture, designed in Cadence Virtuoso. This documentation covers the full design cycle, from transistor-level schematic capture to physical layout and post-layout verification.
 
----
+## Project Hierarchy
 
-## 📌 Project Overview
-Static Random-Access Memory (SRAM) is a critical pillar of modern high-speed cache architectures. A standard 6T SRAM cell utilizes two cross-coupled CMOS inverters to store a single bit of data, isolated or accessed via two control NMOS pass-transistors. Analyzing the DC performance is a fundamental step to understanding the cell's immunity to noise during hold and read operations.
+### 1. Schematic Design & Symbols
+The core 6T SRAM cell is supported by peripheral circuitry, including precharge logic, sense amplifiers, and row decoders.
 
----
+*   **Core 6T SRAM:** ![Schematic](assets/04_core_6t_sram_schematic.png) | ![Symbol](assets/08_sram_6t_symbol.png)
+*   **Sense Amplifier:** ![Schematic](assets/01_sense_amp_schematic.png) | ![Symbol](assets/11_sense_amp_symbol.png)
+*   **Precharge Circuit:** ![Schematic](assets/02_precharge_schematic.png) | ![Symbol](assets/10_precharge_symbol.png)
+*   **Row Decoder:** ![Schematic](assets/03_decoder_slice_schematic.png) | ![Symbol](assets/09_decoder_slice_symbol.png)
 
-## 🛠️ Circuit Design & Specifications
+### 2. Array Integration
+The components are integrated into an 8-bit column and finally an 8x8 array.
 
-The schematic was designed using the **GPDK 45nm CMOS technology node** (`g45n1svt`) with a supply voltage ($V_{DD}$) of **1.8V**. All transistors are sized for a balanced layout profile.
+*   **8-Bit Column:** ![Schematic](assets/05_sram_8bit_column_schematic.png) | ![Symbol](assets/12_sram_8bit_column_symbol.png)
+*   **8x8 Array:** ![Schematic](assets/06_sram_8x8_array_schematic.png) | ![Symbol](assets/13_sram_8x8_array_symbol.png)
+*   **System Testbench:** ![Schematic](assets/07_sram_system_testbench.png)
 
-| Transistor Name | Type | Function | Width ($W$) | Length ($L$) | Model |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **PM0, PM1** | PMOS | Pull-Up (Load) | 120 nm | 45 nm | `g45n1svt` |
-| **NM0, NM1** | NMOS | Pull-Down (Driver) | 120 nm | 45 nm | `g45n1svt` |
-| **NM2, NM3** | NMOS | Access (Pass-Gate)| 120 nm | 45 nm | `g45n1svt` |
+## Verification & Analysis
 
-### 🔍 Schematic Capture
-An independent DC voltage source (`V4`) was intentionally tied to the internal storage node `Qb` to break the feedback loop and execute a precise voltage sweep for stability characterization.
+### Transient Analysis
+Transient simulation verifies the read/write functionality of the system over time.
+![Transient Response](assets/22_system_transient_response.png)
 
-![SRAM Schematic](Schematic.png)
+### Layout & Physical Verification
+The 6T cell was laid out with attention to area and parasitic mitigation. Verification included DRC and LVS checks using Cadence PVS.
+*   **Layout:** ![Full](assets/17_sram_cell_layout_wide.png) | ![Detail](assets/18_sram_cell_layout_zoom.png)
+*   **DRC:** ![Density Checks](assets/16_drc_density_checks.png)
+*   **LVS:** ![Status](assets/14_lvs_run_status.png) | ![Summary](assets/15_lvs_match_summary.png)
 
----
-
-## 💻 Simulation Setup (ADE L)
-
-The simulation was configured and executed using the **Cadence Analog Design Environment L (ADE L)** engine with the Spectre simulator:
-
-* **Analysis Type:** DC Sweep
-* **Sweep Variable:** Component Parameter (`Voltage Source /V4` connected to node `Qb`)
-* **Sweep Range:** $0\text{V} \rightarrow 1.8\text{V}$ (Linear)
-* **Monitored Outputs:** Internal complementary storage nodes `Q` and `Qb`
-
-![ADE L Setup](ADE%20L%20setup.png)
-
----
-
-## 📊 Results & Analysis
-
-Waveforms were analyzed using **Virtuoso Visualization & Analysis XL**. 
-
-* 🔴 **Node Qb Response (Red Curve):** Tracks the cross-coupled inverter feedback behavior.
-* 🔵 **Node Q Response (Cyan Curve):** Demonstrates a sharp inverter switching threshold (trip point) occurring precisely around **~0.85V**.
-* 🟢 **Linear Sweep Reference (Green Curve):** Represents the independent sweep voltage input (`/Qb`).
-
-The intersection of these Voltage Transfer Characteristics (VTC) yields the foundational plotting behavior required to calculate the **Static Noise Margin (SNM)** via the classic "butterfly curve" method.
-
-![DC Analysis Plot](Output%20Graph.png)
+### Parasitic Extraction (PEX)
+RC parasitics were extracted using Quantus QRC for accurate post-layout simulation.
+*   **Setup:** ![Extraction Setup](assets/20_quantus_extraction_setup.png)
+*   **Run Details:** ![Details](assets/19_quantus_run_details.png)
+*   **Success:** ![Result](assets/21_quantus_success.png)
 
 ---
 
-## 🧰 Tools & Environment
-* **EDA Tool suite:** Cadence Virtuoso (IC6.1.X)
-* **Schematic Capture:** Virtuoso Schematic Editor
-* **Simulation Engine:** ADE L (Spectre)
-* **Waveform Viewer:** Virtuoso Visualization & Analysis XL
+## Technical Stack
+*   **Schematic/Symbol:** Cadence Virtuoso Schematic Editor
+*   **Simulation:** ADE L / Virtuoso Visualization & Analysis XL
+*   **Physical Design:** Virtuoso Layout Suite
+*   **Verification:** Cadence PVS (DRC/LVS)
+*   **Extraction:** Quantus QRC
