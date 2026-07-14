@@ -35,7 +35,7 @@ The 6T cell was laid out with attention to area and parasitic mitigation. Verifi
 RC parasitics were extracted using Quantus QRC for accurate post-layout simulation.
 *   **Setup:** ![Extraction Setup](assets/20_quantus_extraction_setup.png)
 *   **Run Details:** ![Details](assets/19_quantus_run_details.png)
-*   **Success:** ![Result](assets/21_quantus_success.png)
+*   **Success:** ![Result](assets/21_quantus_success_.png)
 
 ---
 
